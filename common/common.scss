@@ -1216,7 +1216,7 @@ div.menu-links-header .fa, div.menu-links-header a,
 }
 
 .topic-body {
-  background: transparent!important;
+  background: transparent !important;
 }
 
 .sign-up-button, #new-account-link {
@@ -1269,6 +1269,7 @@ div.menu-links-header .fa, div.menu-links-header a,
   color: var(--primary);
   background-color: var(--primary-very-low);
 }
+
 .topic-list {
   border-top: none;
 }
@@ -1289,16 +1290,20 @@ div.menu-links-header .fa, div.menu-links-header a,
     font-size: 10px;
     margin-right: -2px;
   }
+
   .num.posts-map {
     position: relative;
     font-size: 17px;
+
     a {
       color: var(--primary-medium) !important;
       font-weight: normal;
     }
+
     a.heatmap-high {
       color: #c66 !important;
     }
+
     width: 100px;
   }
 }
@@ -1306,6 +1311,7 @@ div.menu-links-header .fa, div.menu-links-header a,
 .topic-list td.last-post,
 .topic-list th.activity {
   width: 160px;
+
   .relative-date {
     color: var(--primary-high);
   }
@@ -1326,6 +1332,7 @@ div.menu-links-header .fa, div.menu-links-header a,
     font-size: 12px;
     padding: 2px 6px;
   }
+
   .badge-category-bg {
     top: -1px;
   }
@@ -1335,6 +1342,7 @@ div.menu-links-header .fa, div.menu-links-header a,
   .poster-avatar {
     margin-right: 10px;
   }
+
   .poster-avatar,
   .poster-info {
     float: left;
@@ -1374,5 +1382,23 @@ body {
   .latest-topic-list-item.visited a.badge-wrapper,
   .category-topic-link.visited a.badge-wrapper {
     opacity: 1;
+  }
+}
+
+.d-header-icons {
+
+  li.header-dropdown-toggle {
+    background-color: transparent !important;
+    border-radius: 0;
+    transition: border-radius 0.4s;
+
+    &:hover {
+      background-color: $accent !important;
+      border-radius: 50px;
+
+      * {
+        color: $white !important;
+      }
+    }
   }
 }
