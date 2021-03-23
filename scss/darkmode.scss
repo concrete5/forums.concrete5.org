@@ -1,0 +1,55 @@
+body {
+  .footer {
+    background-color: $dark-blue-secondary;
+
+    h4.page-title {
+      color: $gray-secondary;
+    }
+
+    ul.list-unstyled {
+      li {
+        a {
+          color: $white;
+          opacity: 0.7;
+
+          &:hover, &:active, &.nav-selected, &.nav-path-selected {
+            color: $white;
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .footer-social {
+      a {
+        color: $white;
+        opacity: 0.7;
+
+        &:hover {
+          color: $white;
+          opacity: 1;
+        }
+      }
+    }
+
+    .footer-legal {
+      p {
+        color: $white;
+        opacity: 0.7;
+      }
+    }
+
+
+    /* Tablet + Mobile */
+    @media (max-width: 576px) {
+      h4.page-title {
+        border-bottom: 1px solid $dark-blue-tertiary;
+        text-transform: none !important;
+
+        &::after {
+          color: $gray-tertiary;
+        }
+      }
+    }
+  }
+}
