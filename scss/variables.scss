@@ -73,14 +73,14 @@ $theme-colors: (
         'dark-blue-quaternary': $dark-blue-quaternary
 );
 
-$link-color: theme-color('secondary');
-$link-hover-color: theme-color('secondary');
+$link-color: $secondary;
+$link-hover-color: $secondary;
 $link-hover-decoration: none !default;
 
 $body-bg: $light-gray;
-$headings-color: theme-color('text');
+$headings-color: $text;
 $headings-font-family: "Poppins";
-$label-color: theme-color('text');
+$label-color: $text;
 $font-family-base: 'Noto Sans';
 $alert-border-radius: 0 !default;
 $alert-success-border: $alert-border-radius !default;
@@ -88,8 +88,8 @@ $alert-info-border: $alert-border-radius !default;
 $alert-warning-border: $alert-border-radius !default;
 $alert-danger-border: $alert-border-radius !default;
 $input-border-radius: 0 !default;
-$breadcrumb-color: theme-color('accent') !default;
-$breadcrumb-active-color: theme-color('breadcrumb') !default;
+$breadcrumb-color: $accent !default;
+$breadcrumb-active-color: $breadcrumb !default;
 
 //== Modals
 //

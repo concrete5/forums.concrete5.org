@@ -1,7 +1,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"/>
 
 <script type="text/discourse-plugin" version="0.8.25">
   api.reopenWidget("home-logo", {
@@ -23,9 +27,177 @@
       );
     }
   });
+
+
 </script>
 
 <script type="text/discourse-plugin" version="0.8">
+/* ========================================================================
+ * Bootstrap: dropdown.js v3.4.1
+ * https://getbootstrap.com/docs/3.4/javascript/#dropdowns
+ * ========================================================================
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // DROPDOWN CLASS DEFINITION
+  // =========================
+
+  var backdrop = '.dropdown-backdrop'
+  var toggle   = '[data-toggle="dropdown"]'
+  var Dropdown = function (element) {
+    $(element).on('click.bs.dropdown', this.toggle)
+  }
+
+  Dropdown.VERSION = '3.4.1'
+
+  function getParent($this) {
+    var selector = $this.attr('data-target')
+
+    if (!selector) {
+      selector = $this.attr('href')
+      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+    }
+
+    var $parent = selector !== '#' ? $(document).find(selector) : null
+
+    return $parent && $parent.length ? $parent : $this.parent()
+  }
+
+  function clearMenus(e) {
+    if (e && e.which === 3) return
+    $(backdrop).remove()
+    $(toggle).each(function () {
+      var $this         = $(this)
+      var $parent       = getParent($this)
+      var relatedTarget = { relatedTarget: this }
+
+      if (!$parent.hasClass('open')) return
+
+      if (e && e.type == 'click' && /input|textarea/i.test(e.target.tagName) && $.contains($parent[0], e.target)) return
+
+      $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
+
+      if (e.isDefaultPrevented()) return
+
+      $this.attr('aria-expanded', 'false')
+      $parent.removeClass('open').trigger($.Event('hidden.bs.dropdown', relatedTarget))
+    })
+  }
+
+  Dropdown.prototype.toggle = function (e) {
+    var $this = $(this)
+
+    if ($this.is('.disabled, :disabled')) return
+
+    var $parent  = getParent($this)
+    var isActive = $parent.hasClass('open')
+
+    clearMenus()
+
+    if (!isActive) {
+      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
+        // if mobile we use a backdrop because click events don't delegate
+        $(document.createElement('div'))
+          .addClass('dropdown-backdrop')
+          .insertAfter($(this))
+          .on('click', clearMenus)
+      }
+
+      var relatedTarget = { relatedTarget: this }
+      $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget))
+
+      if (e.isDefaultPrevented()) return
+
+      $this
+        .trigger('focus')
+        .attr('aria-expanded', 'true')
+
+      $parent
+        .toggleClass('open')
+        .trigger($.Event('shown.bs.dropdown', relatedTarget))
+    }
+
+    return false
+  }
+
+  Dropdown.prototype.keydown = function (e) {
+    if (!/(38|40|27|32)/.test(e.which) || /input|textarea/i.test(e.target.tagName)) return
+
+    var $this = $(this)
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    if ($this.is('.disabled, :disabled')) return
+
+    var $parent  = getParent($this)
+    var isActive = $parent.hasClass('open')
+
+    if (!isActive && e.which != 27 || isActive && e.which == 27) {
+      if (e.which == 27) $parent.find(toggle).trigger('focus')
+      return $this.trigger('click')
+    }
+
+    var desc = ' li:not(.disabled):visible a'
+    var $items = $parent.find('.dropdown-menu' + desc)
+
+    if (!$items.length) return
+
+    var index = $items.index(e.target)
+
+    if (e.which == 38 && index > 0)                 index--         // up
+    if (e.which == 40 && index < $items.length - 1) index++         // down
+    if (!~index)                                    index = 0
+
+    $items.eq(index).trigger('focus')
+  }
+
+
+  // DROPDOWN PLUGIN DEFINITION
+  // ==========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data('bs.dropdown')
+
+      if (!data) $this.data('bs.dropdown', (data = new Dropdown(this)))
+      if (typeof option == 'string') data[option].call($this)
+    })
+  }
+
+  var old = $.fn.dropdown
+
+  $.fn.dropdown             = Plugin
+  $.fn.dropdown.Constructor = Dropdown
+
+
+  // DROPDOWN NO CONFLICT
+  // ====================
+
+  $.fn.dropdown.noConflict = function () {
+    $.fn.dropdown = old
+    return this
+  }
+
+
+  // APPLY TO STANDARD DROPDOWN ELEMENTS
+  // ===================================
+
+  $(document)
+    .on('click.bs.dropdown.data-api', clearMenus)
+    .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
+    .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
+    .on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown)
+    .on('keydown.bs.dropdown.data-api', '.dropdown-menu', Dropdown.prototype.keydown)
+
+}(jQuery);
+
     /*!
   * Bootstrap util.js v4.3.1 (https://getbootstrap.com/)
   * Copyright 2011-2019 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
@@ -626,6 +798,970 @@
         return Collapse;
 
     }));
-    //# sourceMappingURL=collapse.js.map
-    $('.collapse').collapse()
+
+    $(document).ready(function() {
+        /*
+         * The virtual-dom component of discourse only allow adding certain html attributes
+         * so we need to to manipulate the dom to add the missing attributes.
+         */
+
+        $("#ccm-toggle-mobile-nav")
+            .attr("data-target", "#navbarSupportedContent")
+            .attr("aria-controls", "navbarSupportedContent")
+            .attr("aria-expanded", "false")
+            .attr("aria-label", "Toggle navigation")
+
+         $("#ccm-account-dropdown")
+            .attr("data-toggle", "dropdown")
+            .attr("aria-haspopup", "true")
+            .attr("aria-expanded", "false")
+
+        $(".dropdown-menu.dropdown-menu-right")
+            .attr("aria-labelledby", "ccm-account-dropdown");
+
+        $('#ccm-account-dropdown').dropdown()
+
+        $("#navbarSupportedContent").collapse("hide");
+
+        $("#ccm-toggle-mobile-nav").click(function() {
+            var $el = $("#navbarSupportedContent");
+
+            if ($el.hasClass("show")) {
+                $el.collapse('hide');
+            } else {
+                $el.collapse('show');
+            }
+        });
+
+        $(".hamburger").click(function() {
+            $(this).toggleClass("is-active");
+        });
+
+        $('[data-toggle="collapse"]').collapse({
+            parent: 'footer'
+        });
+
+        $("#ccm-account-dropdown-mobile").next()
+            .attr("aria-labelledby", "ccm-account-dropdown-mobile");
+
+        $("#ccm-account-dropdown-mobile")
+            .attr("data-toggle", "dropdown")
+            .attr("aria-expanded", "true")
+            .click(function(e) {
+                e.preventDefault();
+                return false;
+            })
+            .dropdown();
+
+    });
+
+</script>
+<script type="text/discourse-plugin" version="0.8">
+const getURL = require('discourse-common/lib/get-url').default;
+const I18n = require('I18n').default;
+const h = require('virtual-dom').h;
+const currentUser = api.getCurrentUser();
+
+api.createWidget("header", {
+    tagName: "div.bootstrap",
+    buildKey: () => `header`,
+    html(attrs, state) {
+        var isLoggedOn = (currentUser !== null);
+        var isAdmin = isLoggedOn && currentUser.admin;
+        var accountPath = isLoggedOn ? currentUser.get("path") : "";
+
+        var topLevelMenuItems = {
+            mainNav: [{
+                    label: I18n.t(themePrefix("nav.home")),
+                    url: "https://community.concretecms.com/",
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    label: I18n.t(themePrefix("nav.about")),
+                    url: "https://community.concretecms.com/",
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    label: I18n.t(themePrefix("nav.forum")),
+                    url: getURL("/"),
+                    isVisible: true,
+                    isActive: true
+                },
+                {
+                    label: I18n.t(themePrefix("nav.extensions")),
+                    url: "https://community.concretecms.com/",
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    label: I18n.t(themePrefix("nav.support")),
+                    url: "https://community.concretecms.com/",
+                    isVisible: true,
+                    isActive: false
+                }
+            ],
+
+            subNav: [{
+                    label: I18n.t(themePrefix("nav.home")),
+                    url: getURL("/"),
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    label: I18n.t(themePrefix("nav.admin")),
+                    url: getURL("/admin"),
+                    isVisible: isAdmin,
+                    isActive: false
+                }
+            ],
+
+            accountNav: [{
+                    label: I18n.t("user.bookmarks"),
+                    url: getURL(`${accountPath}/activity/bookmarks`),
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    label: I18n.t("user.preferences"),
+                    url: getURL(`${accountPath}/preferences/account`),
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    label: I18n.t("user.notifications"),
+                    url: getURL(`${accountPath}/preferences/notifications`),
+                    isVisible: true,
+                    isActive: false
+                }
+            ]
+        };
+
+        var i = 0;
+
+        var menuItemNodes = [];
+
+        for (var topLevelMenuItem of topLevelMenuItems.mainNav) {
+            i++;
+
+            if (topLevelMenuItem.isVisible) {
+                menuItemNodes.push(
+                    h(
+                        "li.nav-item.index-" + i + (topLevelMenuItem.isActive ? ".active" : ""), {},
+                        h(
+                            "a.nav-link", {
+                                "href": topLevelMenuItem.url,
+                                "target": "_self"
+                            },
+                            topLevelMenuItem.label
+                        )
+                    )
+                );
+            }
+        }
+
+        menuItemNodes.push(
+            h(
+                "li.d-none.d-lg-block.nav-item", {},
+                h(
+                    "a.nav-link", {
+                        "href": getURL("/search"),
+                        "target": "_self",
+                        "title:": I18n.t(themePrefix("nav.search"))
+                    },
+                    h(
+                        "i.fas.fa-search"
+                    )
+                )
+            )
+        );
+
+
+        if (isLoggedOn) {
+            var accountMenuItemNodes = [];
+            var accountMenuDropdownNodes = [];
+
+            for (var accountMenuItem of topLevelMenuItems.accountNav) {
+                accountMenuItemNodes.push(
+                    h(
+                        "a.dropdown-item" + (accountMenuItem.isActive ? ".active" : ""), {
+                            "href": accountMenuItem.url,
+                            "target": "_self"
+                        },
+                        accountMenuItem.label
+                    )
+                );
+
+                accountMenuDropdownNodes.push(
+                    h(
+                        "li.nav-item",
+                        {},
+                        h(
+                            "a.nav-link" + (accountMenuItem.isActive ? ".active" : ""), {
+                                "href": accountMenuItem.url,
+                                "target": "_self"
+                            },
+                            accountMenuItem.label
+                        )
+                    )
+                );
+            }
+
+            accountMenuItemNodes.push(h("div.dropdown-divider"));
+            accountMenuItemNodes.push(this.attach("flat-button", {
+                action: "logout",
+                content: I18n.t("user.log_out"),
+                icon: "sign-out-alt",
+                label: "user.log_out",
+            }));
+
+            accountMenuDropdownNodes.push(
+                h(
+                    "li.nav-item",
+                    {},
+                    this.attach("flat-button", {
+                        action: "logout",
+                        content: I18n.t("user.log_out"),
+                        icon: "sign-out-alt",
+                        label: "user.log_out",
+                    })
+                )
+            );
+
+            menuItemNodes.push(
+                h(
+                    "li.d-none.d-lg-block.nav-item", {},
+                    [
+                        h(
+                            "a.nav-link", {
+                                "href": "#",
+                                "data-toggle": "dropdown",
+                                "aria-haspopup": "true",
+                                "aria-expanded": "false",
+                                "id": "ccm-account-dropdown",
+                                "title:": I18n.t(themePrefix("nav.profile"))
+                            },
+                            h(
+                                "i.fas.fa-user"
+                            )
+                        ),
+                        h(
+                            "div.dropdown-menu.dropdown-menu-right", {
+                                "aria-labelledby": "ccm-account-dropdown"
+                            },
+                            [
+                                h("h6.dropdown-header", {}, I18n.t(themePrefix("nav.profile")))
+                            ].concat(accountMenuItemNodes)
+                        )
+                    ]
+                )
+            );
+
+            menuItemNodes.push(
+                h(
+                    "li.d-block.d-lg-none.nav-item.index-" + i,
+                    {},
+                    [
+                        h(
+                            "a.nav-link",
+                            {
+                                "href": "#",
+                                "id": "ccm-account-dropdown-mobile"
+                            },
+                            [
+                                h(
+                                    "span",
+                                    {},
+                                    I18n.t(themePrefix("nav.profile"))
+                                ),
+                                h(
+                                    "span.caret",
+                                    {}
+                                )
+                            ]
+                        ),
+                        h(
+                            "ul.dropdown-menu",
+                            {},
+                            accountMenuDropdownNodes
+                        )
+                    ]
+                )
+            );
+
+            i++;
+        } else {
+            menuItemNodes.push(
+                h(
+                    "li.d-none.d-lg-block.nav-item", {},
+                    h(
+                        "a.nav-link", {
+                            "href": getURL("/login"),
+                            "target": "_self",
+                            "title:": I18n.t(themePrefix("nav.login"))
+                        },
+                        h(
+                            "i.fas.fa-user"
+                        )
+                    )
+                )
+            );
+
+            menuItemNodes.push(
+                h(
+                    "li.d-block.d-lg-none.nav-item.index-" + i,
+                    {},
+                    h(
+                        "a.nav-link",
+                        {
+                            "href": getURL("/login")
+                        },
+                        I18n.t(themePrefix("nav.login"))
+                    )
+                )
+            );
+
+            i++;
+        }
+
+        var subMenuItemNodes = [];
+
+        for (var suvLevelMenuItem of topLevelMenuItems.subNav) {
+
+            if (suvLevelMenuItem.isVisible) {
+                subMenuItemNodes.push(
+                    h(
+                        "li" + (topLevelMenuItem.isActive ? ".active" : ""), {},
+                        h(
+                            "a", {
+                                "href": suvLevelMenuItem.url,
+                                "target": "_self"
+                            },
+                            suvLevelMenuItem.label
+                        )
+                    )
+                );
+            }
+        }
+
+        return h("header.has-sub-nav", {},
+            [
+                h("div.container", {},
+                    h("nav.navbar.navbar-expand-lg.navbar-light", {},
+                        [
+                            h(
+                                "div.navbar-inner", {},
+                                [
+                                    h(
+                                        "div.navbar-brand", {},
+                                        h(
+                                            "div.header-site-title", {},
+                                            h(
+                                                "a", {
+                                                    "href": getURL("/")
+                                                },
+                                                h(
+                                                    "img.ccm-svg.ccm-image-block.img-fluid", {
+                                                        "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI1LjIuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA2NjYgMTAxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA2NjYgMTAxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbHRlcjp1cmwoI0Fkb2JlX09wYWNpdHlNYXNrRmlsdGVyKTt9Cgkuc3Qxe2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO2ZpbGw6I0ZGRkZGRjt9Cgkuc3Qye21hc2s6dXJsKCNtYXNrLTJfMV8pO2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO2ZpbGw6IzAxN0RERDt9Cjwvc3R5bGU+CjxnIGlkPSJsb2dvLmNvbS1kcmsiPgoJPGcgaWQ9Ikdyb3VwLTM2Ij4KCQk8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsIDAuNDgxOTAwKSI+CgkJCTxnIGlkPSJDbGlwLTIiPgoJCQk8L2c+CgkJCTxkZWZzPgoJCQkJPGZpbHRlciBpZD0iQWRvYmVfT3BhY2l0eU1hc2tGaWx0ZXIiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMSIgeT0iMS41IiB3aWR0aD0iOTgiIGhlaWdodD0iOTgiPgoJCQkJCTxmZUNvbG9yTWF0cml4ICB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMSAwIDAgMCAwICAwIDEgMCAwIDAgIDAgMCAxIDAgMCAgMCAwIDAgMSAwIi8+CgkJCQk8L2ZpbHRlcj4KCQkJPC9kZWZzPgoJCQk8bWFzayBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSIxIiB5PSIxLjUiIHdpZHRoPSI5OCIgaGVpZ2h0PSI5OCIgaWQ9Im1hc2stMl8xXyI+CgkJCQk8ZyBjbGFzcz0ic3QwIj4KCQkJCQk8cG9seWdvbiBpZD0icGF0aC0xXzFfIiBjbGFzcz0ic3QxIiBwb2ludHM9IjAsMC41IDk5LjUsMC41IDk5LjUsMTAwIDAsMTAwIAkJCQkJIi8+CgkJCQk8L2c+CgkJCTwvbWFzaz4KCQkJPHBhdGggaWQ9IlJlY3RhbmdsZSIgY2xhc3M9InN0MiIgZD0iTTksMS41aDgyYzQuNCwwLDgsMy42LDgsOHY4MmMwLDQuNC0zLjYsOC04LDhIOWMtNC40LDAtOC0zLjYtOC04di04MkMxLDUuMSw0LjYsMS41LDksMS41eiIKCQkJCS8+CgkJPC9nPgoJCTxwYXRoIGlkPSJGaWxsLTQiIGNsYXNzPSJzdDEiIGQ9Ik02MCw4My42Yy0yLjgsMS41LTYuNCwyLjQtOC41LDIuNmMtOC40LDAuNy0xNi44LTEuNS0yMi42LTcuMWMtNS43LTYtNi45LTE0LTEuNy0yMC42CgkJCWM0LjgtNi4xLDEyLjYtOC44LDIwLjctOS4xYzQuNS0wLjIsMTkuNywxLjYsMTUuMiw4LjljLTMuNiw2LTEzLjUsMC0xOS4yLDEuOWMtNi40LDIuMS04LjIsMTAuNi0yLjIsMTQuMgoJCQljNC40LDIuNiwxMC43LDIuNCwxNC45LTAuM2M2LTMuOSwxNy4yLTIyLjIsMjQuNC0xMy41QzgyLjQsNjIuNCw2NS41LDgwLjYsNjAsODMuNiBNMTcuOCwzNi4yYy0wLjYtMywwLjItNi40LDMuMi02CgkJCWMyLjYsMC40LDMuNSw0LjEsNCw2LjdjMC40LDIuMiw1LjgsMTcuOCwzLDE3LjNDMjUuMyw1My42LDE4LjQsMzkuMywxNy44LDM2LjIgTTMyLjIsMTguN2M0LTMuNCw1LjksMi40LDYuNCw1LjMKCQkJYzAuNCwyLjgsNS41LDI0LDAuMSwyMy42Yy00LjEtMC4zLTYuOS0xOC4zLTcuMi0yMS4xQzMxLjEsMjQuMywzMC4yLDIwLjQsMzIuMiwxOC43IE01Mi44LDEyLjdjMy40LDAuNywyLjUsNy43LDIuNCwxMC4zCgkJCWMwLDIuOCwwLjMsMjMuNy00LjEsMjMuMWMtNC41LTAuNi0zLjUtMjEuNC0zLjctMjQuN0M0Ny42LDE4LDQ4LjEsMTEuOCw1Mi44LDEyLjcgTTYzLjIsMjcuN2MwLjQtMi4xLDAuOC02LDMuMi02LjkKCQkJYzQuNy0xLjksNC42LDQsNC4xLDYuOGMtMC41LDIuNy00LjIsMjMuOC04LjksMjEuOEM1Ny45LDQ3LjksNjIuNiwzMC40LDYzLjIsMjcuNyIvPgoJCTxwYXRoIGlkPSJGaWxsLTYiIGNsYXNzPSJzdDEiIGQ9Ik0xMjQuOSw0MGMxLjktMy40LDQuNS02LDcuOS03LjljMy4zLTEuOSw3LjEtMi44LDExLjItMi44YzQuOCwwLDkuMSwxLjIsMTIuNywzLjcKCQkJYzMuNiwyLjUsNi4yLDUuOSw3LjYsMTAuM2gtMTBjLTEtMi4xLTIuNC0zLjYtNC4yLTQuN2MtMS44LTEtMy45LTEuNS02LjItMS41Yy0yLjUsMC00LjgsMC42LTYuNywxLjhjLTIsMS4yLTMuNSwyLjgtNC42LDUKCQkJYy0xLjEsMi4yLTEuNiw0LjctMS42LDcuNmMwLDIuOSwwLjUsNS40LDEuNiw3LjVjMS4xLDIuMiwyLjYsMy44LDQuNiw1YzIsMS4yLDQuMiwxLjgsNi43LDEuOGMyLjQsMCw0LjQtMC41LDYuMi0xLjYKCQkJYzEuOC0xLjEsMy4yLTIuNiw0LjItNC43aDEwYy0xLjQsNC40LTQsNy45LTcuNiwxMC4zYy0zLjYsMi41LTcuOSwzLjctMTIuNywzLjdjLTQuMSwwLTcuOS0wLjktMTEuMi0yLjhjLTMuMy0xLjktNi00LjUtNy45LTcuOAoJCQljLTEuOS0zLjMtMi45LTcuMi0yLjktMTEuNEMxMjIsNDcuMiwxMjMsNDMuNCwxMjQuOSw0MCIvPgoJCTxwYXRoIGlkPSJGaWxsLTgiIGNsYXNzPSJzdDEiIGQ9Ik0xODksNjVjMS40LTAuOCwyLjUtMS45LDMuMy0zLjRzMS4yLTMuNCwxLjItNS42YzAtMy4zLTAuOS01LjgtMi42LTcuNQoJCQljLTEuNy0xLjgtMy44LTIuNi02LjMtMi42Yy0yLjUsMC00LjYsMC45LTYuMiwyLjZzLTIuNSw0LjMtMi41LDcuNWMwLDMuMywwLjgsNS44LDIuNCw3LjVjMS42LDEuOCwzLjcsMi42LDYuMiwyLjYKCQkJQzE4Ni4xLDY2LjIsMTg3LjYsNjUuOCwxODksNjUgTTE3NS42LDcxLjVjLTIuNi0xLjUtNC43LTMuNS02LjItNi4yYy0xLjUtMi43LTIuMy01LjgtMi4zLTkuM2MwLTMuNSwwLjgtNi42LDIuMy05LjMKCQkJYzEuNi0yLjcsMy43LTQuOCw2LjQtNi4yYzIuNy0xLjUsNS43LTIuMiw5LTIuMmMzLjMsMCw2LjMsMC43LDksMi4yYzIuNywxLjUsNC44LDMuNSw2LjQsNi4yYzEuNiwyLjcsMi4zLDUuOCwyLjMsOS4zCgkJCWMwLDMuNS0wLjgsNi42LTIuNCw5LjNjLTEuNiwyLjctMy43LDQuOC02LjQsNi4yYy0yLjcsMS41LTUuNywyLjItOS4xLDIuMkMxODEuMiw3My43LDE3OC4yLDczLDE3NS42LDcxLjUiLz4KCQk8cGF0aCBpZD0iRmlsbC0xMCIgY2xhc3M9InN0MSIgZD0iTTIzNS4zLDQyLjJjMi41LDIuNiwzLjgsNi4yLDMuOCwxMC44djIwLjJoLTguN3YtMTljMC0yLjctMC43LTQuOC0yLTYuMwoJCQljLTEuNC0xLjUtMy4yLTIuMi01LjYtMi4yYy0yLjQsMC00LjMsMC43LTUuNywyLjJjLTEuNCwxLjUtMi4xLDMuNi0yLjEsNi4zdjE5aC04LjdWMzguOGg4Ljd2NC4zYzEuMi0xLjUsMi42LTIuNyw0LjQtMy41CgkJCWMxLjgtMC44LDMuOC0xLjMsNS45LTEuM0MyMjkuNSwzOC4zLDIzMi44LDM5LjYsMjM1LjMsNDIuMiIvPgoJCTxwYXRoIGlkPSJGaWxsLTEyIiBjbGFzcz0ic3QxIiBkPSJNMjQ0LjgsNDYuN2MxLjQtMi43LDMuNS00LjcsNi02LjJjMi42LTEuNSw1LjUtMi4yLDguOC0yLjJjNC4zLDAsNy44LDEuMSwxMC42LDMuMgoJCQljMi44LDIuMSw0LjcsNS4xLDUuNiw5aC05LjRjLTAuNS0xLjUtMS4zLTIuNy0yLjUtMy41Yy0xLjItMC44LTIuNi0xLjMtNC40LTEuM2MtMi41LDAtNC40LDAuOS01LjksMi43Yy0xLjQsMS44LTIuMiw0LjMtMi4yLDcuNwoJCQljMCwzLjMsMC43LDUuOCwyLjIsNy42YzEuNCwxLjgsMy40LDIuNyw1LjksMi43YzMuNSwwLDUuOC0xLjYsNi45LTQuN2g5LjRjLTEsMy43LTIuOCw2LjctNS42LDguOWMtMi44LDIuMi02LjMsMy4zLTEwLjUsMy4zCgkJCWMtMy4zLDAtNi4yLTAuNy04LjgtMi4yYy0yLjYtMS41LTQuNi0zLjUtNi02LjJjLTEuNC0yLjctMi4yLTUuOC0yLjItOS4zQzI0Mi42LDUyLjQsMjQzLjMsNDkuMywyNDQuOCw0Ni43Ii8+CgkJPHBhdGggaWQ9IkZpbGwtMTQiIGNsYXNzPSJzdDEiIGQ9Ik0yOTIuOCwzOS45YzEuOC0xLDMuOS0xLjUsNi4yLTEuNXY5LjFoLTIuM2MtMi43LDAtNC44LDAuNi02LjIsMS45Yy0xLjQsMS4zLTIuMSwzLjUtMi4xLDYuNwoJCQl2MTcuMWgtOC43VjM4LjhoOC43djUuM0MyODkuNSw0Mi4zLDI5MSw0MC45LDI5Mi44LDM5LjkiLz4KCQk8cGF0aCBpZD0iRmlsbC0xNiIgY2xhc3M9InN0MSIgZD0iTTMyNS4yLDUyLjhjMC0yLjItMC44LTQtMi40LTUuNGMtMS42LTEuMy0zLjUtMi01LjgtMmMtMi4xLDAtNCwwLjctNS40LDIKCQkJYy0xLjUsMS4zLTIuNCwzLjEtMi43LDUuNEgzMjUuMnogTTMzNCw1OC42aC0yNS4xYzAuMiwyLjUsMS4xLDQuNCwyLjYsNS44YzEuNSwxLjQsMy40LDIuMSw1LjYsMi4xYzMuMiwwLDUuNS0xLjQsNi45LTQuMmg5LjQKCQkJYy0xLDMuMy0yLjksNi01LjcsOC4yYy0yLjgsMi4xLTYuMywzLjItMTAuNCwzLjJjLTMuMywwLTYuMy0wLjctOC45LTIuMmMtMi42LTEuNS00LjctMy41LTYuMS02LjJjLTEuNS0yLjctMi4yLTUuOC0yLjItOS4zCgkJCWMwLTMuNiwwLjctNi43LDIuMi05LjRjMS40LTIuNywzLjUtNC44LDYuMS02LjJjMi42LTEuNCw1LjYtMi4yLDktMi4yYzMuMywwLDYuMiwwLjcsOC44LDIuMWMyLjYsMS40LDQuNiwzLjQsNiw2CgkJCWMxLjQsMi42LDIuMSw1LjUsMi4xLDguOUMzMzQuMiw1Ni41LDMzNC4xLDU3LjYsMzM0LDU4LjZMMzM0LDU4LjZ6Ii8+CgkJPHBhdGggaWQ9IkZpbGwtMTgiIGNsYXNzPSJzdDEiIGQ9Ik0zNDguMSw0NnYxNi42YzAsMS4yLDAuMywyLDAuOCwyLjVjMC42LDAuNSwxLjUsMC44LDIuOCwwLjhoNHY3LjNoLTUuNWMtNy4zLDAtMTEtMy42LTExLTEwLjcKCQkJVjQ2aC00LjF2LTcuMWg0LjF2LTguNWg4Ljd2OC41aDcuN1Y0NkgzNDguMXoiLz4KCQk8cGF0aCBpZD0iRmlsbC0yMCIgY2xhc3M9InN0MSIgZD0iTTM4Mi42LDUyLjhjMC0yLjItMC44LTQtMi40LTUuNGMtMS42LTEuMy0zLjUtMi01LjgtMmMtMi4xLDAtNCwwLjctNS40LDIKCQkJYy0xLjUsMS4zLTIuNCwzLjEtMi43LDUuNEgzODIuNnogTTM5MS4zLDU4LjZoLTI1LjFjMC4yLDIuNSwxLjEsNC40LDIuNiw1LjhjMS41LDEuNCwzLjQsMi4xLDUuNiwyLjFjMy4yLDAsNS41LTEuNCw2LjktNC4yaDkuNAoJCQljLTEsMy4zLTIuOSw2LTUuNyw4LjJjLTIuOCwyLjEtNi4zLDMuMi0xMC40LDMuMmMtMy4zLDAtNi4zLTAuNy04LjktMi4yYy0yLjYtMS41LTQuNy0zLjUtNi4xLTYuMmMtMS41LTIuNy0yLjItNS44LTIuMi05LjMKCQkJYzAtMy42LDAuNy02LjcsMi4yLTkuNGMxLjQtMi43LDMuNS00LjgsNi4xLTYuMmMyLjYtMS40LDUuNi0yLjIsOS0yLjJjMy4zLDAsNi4yLDAuNyw4LjgsMi4xYzIuNiwxLjQsNC42LDMuNCw2LDYKCQkJYzEuNCwyLjYsMi4xLDUuNSwyLjEsOC45QzM5MS41LDU2LjUsMzkxLjUsNTcuNiwzOTEuMyw1OC42TDM5MS4zLDU4LjZ6Ii8+CgkJPHBhdGggaWQ9IkZpbGwtMjIiIGNsYXNzPSJzdDEiIGQ9Ik0zOTYuMiw0MGMxLjktMy40LDQuNS02LDcuOS03LjljMy4zLTEuOSw3LjEtMi44LDExLjItMi44YzQuOCwwLDkuMSwxLjIsMTIuNywzLjcKCQkJYzMuNiwyLjUsNi4yLDUuOSw3LjYsMTAuM2gtMTBjLTEtMi4xLTIuNC0zLjYtNC4yLTQuN2MtMS44LTEtMy45LTEuNS02LjItMS41Yy0yLjUsMC00LjgsMC42LTYuNywxLjhjLTIsMS4yLTMuNSwyLjgtNC42LDUKCQkJYy0xLjEsMi4yLTEuNiw0LjctMS42LDcuNmMwLDIuOSwwLjUsNS40LDEuNiw3LjVzMi42LDMuOCw0LjYsNWMyLDEuMiw0LjIsMS44LDYuNywxLjhjMi40LDAsNC40LTAuNSw2LjItMS42CgkJCWMxLjgtMS4xLDMuMi0yLjYsNC4yLTQuN2gxMGMtMS40LDQuNC00LDcuOS03LjYsMTAuM2MtMy42LDIuNS03LjksMy43LTEyLjcsMy43Yy00LjEsMC03LjktMC45LTExLjItMi44Yy0zLjMtMS45LTYtNC41LTcuOS03LjgKCQkJYy0xLjktMy4zLTIuOS03LjItMi45LTExLjRDMzkzLjMsNDcuMiwzOTQuMiw0My40LDM5Ni4yLDQwIi8+CgkJPHBvbHlnb24gaWQ9IkZpbGwtMjQiIGNsYXNzPSJzdDEiIHBvaW50cz0iNDg3LjcsMjkuOSA0ODcuNyw3My4yIDQ3OSw3My4yIDQ3OSw0NSA0NjcuNCw3My4yIDQ2MC45LDczLjIgNDQ5LjIsNDUgNDQ5LjIsNzMuMiAKCQkJNDQwLjUsNzMuMiA0NDAuNSwyOS45IDQ1MC40LDI5LjkgNDY0LjEsNjIuMSA0NzcuOSwyOS45IAkJIi8+CgkJPHBhdGggaWQ9IkZpbGwtMjYiIGNsYXNzPSJzdDEiIGQ9Ik01MDAuNiw3Mi4xYy0yLjQtMS00LjMtMi41LTUuNy00LjVjLTEuNC0xLjktMi4xLTQuMi0yLjItNi45aDkuM2MwLjEsMS44LDAuOCwzLjIsMS45LDQuMgoJCQljMS4xLDEsMi43LDEuNiw0LjcsMS42YzIsMCwzLjYtMC41LDQuOC0xLjVjMS4yLTEsMS43LTIuMiwxLjctMy44YzAtMS4zLTAuNC0yLjMtMS4yLTMuMmMtMC44LTAuOC0xLjgtMS41LTIuOS0yCgkJCWMtMS4yLTAuNS0yLjgtMS00LjktMS42Yy0yLjgtMC44LTUuMS0xLjYtNi45LTIuNGMtMS44LTAuOC0zLjMtMi00LjUtMy43Yy0xLjMtMS42LTEuOS0zLjgtMS45LTYuNWMwLTIuNiwwLjYtNC44LDEuOS02LjcKCQkJYzEuMy0xLjksMy4xLTMuNCw1LjQtNC40YzIuMy0xLDUtMS41LDcuOS0xLjVjNC41LDAsOC4xLDEuMSwxMC45LDMuM2MyLjgsMi4yLDQuMyw1LjIsNC42LDkuMUg1MTRjLTAuMS0xLjUtMC43LTIuNy0xLjktMy43CgkJCWMtMS4yLTEtMi43LTEuNS00LjctMS41Yy0xLjcsMC0zLDAuNC00LjEsMS4zYy0xLDAuOS0xLjUsMi4xLTEuNSwzLjhjMCwxLjIsMC40LDIuMSwxLjEsMi45YzAuOCwwLjgsMS43LDEuNCwyLjksMS45CgkJCWMxLjEsMC41LDIuNywxLDQuOCwxLjZjMi44LDAuOCw1LjEsMS43LDYuOSwyLjVjMS44LDAuOCwzLjMsMi4xLDQuNiwzLjdjMS4zLDEuNywxLjksMy44LDEuOSw2LjVjMCwyLjMtMC42LDQuNS0xLjgsNi40CgkJCWMtMS4yLDItMywzLjYtNS4zLDQuN3MtNS4xLDEuOC04LjIsMS44QzUwNS43LDczLjYsNTAzLDczLjEsNTAwLjYsNzIuMSIvPgoJCTxwYXRoIGlkPSJGaWxsLTI4IiBjbGFzcz0ic3QxIiBkPSJNNTI4LjIsNzIuNWMtMC42LTAuNi0wLjktMS40LTAuOS0yLjNjMC0wLjksMC4zLTEuNywwLjktMi4zYzAuNi0wLjYsMS40LTAuOSwyLjMtMC45CgkJCWMwLjksMCwxLjYsMC4zLDIuMiwwLjljMC42LDAuNiwwLjksMS40LDAuOSwyLjNjMCwwLjktMC4zLDEuNy0wLjksMi4zYy0wLjYsMC42LTEuMywwLjktMi4yLDAuOQoJCQlDNTI5LjYsNzMuNSw1MjguOCw3My4yLDUyOC4yLDcyLjUiLz4KCQk8cGF0aCBpZD0iRmlsbC0zMCIgY2xhc3M9InN0MSIgZD0iTTUzOC43LDQ3YzEuNC0yLjYsMy4zLTQuNyw1LjgtNi4xYzIuNS0xLjQsNS4zLTIuMSw4LjUtMi4xYzQuMiwwLDcuNiwxLDEwLjMsMy4xCgkJCWMyLjcsMi4xLDQuNSw0LjksNS4yLDguNGgtNC43Yy0wLjYtMi40LTEuOC00LjMtMy44LTUuN2MtMS45LTEuNC00LjMtMi4xLTcuMi0yLjFjLTIuMywwLTQuMywwLjUtNi4xLDEuNWMtMS44LDEtMy4zLDIuNi00LjMsNC42CgkJCWMtMS4xLDItMS42LDQuNi0xLjYsNy41YzAsMywwLjUsNS41LDEuNiw3LjZjMS4xLDIuMSwyLjUsMy42LDQuMyw0LjdjMS44LDEsMy45LDEuNiw2LjEsMS42YzIuOSwwLDUuMi0wLjcsNy4yLTIuMQoJCQlzMy4yLTMuMywzLjgtNS44aDQuN2MtMC44LDMuNS0yLjUsNi4zLTUuMyw4LjRjLTIuNywyLjEtNi4yLDMuMi0xMC4zLDMuMmMtMy4yLDAtNi0wLjctOC41LTIuMWMtMi41LTEuNC00LjQtMy41LTUuOC02LjEKCQkJYy0xLjQtMi42LTIuMS01LjctMi4xLTkuMkM1MzYuNiw1Mi43LDUzNy4zLDQ5LjcsNTM4LjcsNDciLz4KCQk8cGF0aCBpZD0iRmlsbC0zMiIgY2xhc3M9InN0MSIgZD0iTTU5NS4xLDY4LjRjMS45LTEsMy40LTIuNSw0LjYtNC42YzEuMi0yLDEuOC00LjYsMS44LTcuNWMwLTMtMC42LTUuNS0xLjctNy41CgkJCWMtMS4yLTItMi43LTMuNi00LjYtNC42Yy0xLjktMS00LTEuNS02LjItMS41Yy0yLjIsMC00LjMsMC41LTYuMiwxLjVjLTEuOSwxLTMuNCwyLjUtNC42LDQuNmMtMS4xLDItMS43LDQuNi0xLjcsNy41CgkJCWMwLDMsMC42LDUuNSwxLjcsNy41YzEuMSwyLDIuNiwzLjYsNC41LDQuNmMxLjksMSwzLjksMS41LDYuMiwxLjVDNTkxLjEsNjkuOSw1OTMuMiw2OS40LDU5NS4xLDY4LjQgTTU4MC4zLDcxLjUKCQkJYy0yLjUtMS40LTQuNS0zLjUtNi02LjFjLTEuNS0yLjYtMi4yLTUuNy0yLjItOS4yYzAtMy41LDAuNy02LjYsMi4yLTkuMmMxLjUtMi42LDMuNS00LjcsNi4xLTYuMWMyLjYtMS40LDUuNC0yLjEsOC42LTIuMQoJCQljMy4yLDAsNi4xLDAuNyw4LjYsMi4xYzIuNiwxLjQsNC42LDMuNSw2LjEsNi4xYzEuNSwyLjYsMi4yLDUuNywyLjIsOS4yYzAsMy41LTAuNyw2LjUtMi4yLDkuMmMtMS41LDIuNi0zLjUsNC43LTYuMSw2LjEKCQkJYy0yLjYsMS40LTUuNSwyLjEtOC43LDIuMUM1ODUuNyw3My43LDU4Mi44LDczLDU4MC4zLDcxLjUiLz4KCQk8cGF0aCBpZD0iRmlsbC0zNCIgY2xhc3M9InN0MSIgZD0iTTY2MS40LDQyLjRjMi41LDIuNSwzLjgsNi4xLDMuOCwxMC45djE5LjhoLTQuM1Y1My44YzAtMy43LTAuOS02LjUtMi43LTguNAoJCQljLTEuOC0xLjktNC4yLTIuOS03LjMtMi45Yy0zLjIsMC01LjcsMS4xLTcuNiwzLjJjLTEuOSwyLjEtMi45LDUuMi0yLjksOS4ydjE4LjRoLTQuM1Y1My44YzAtMy43LTAuOS02LjUtMi43LTguNAoJCQljLTEuOC0xLjktNC4yLTIuOS03LjMtMi45Yy0zLjIsMC01LjcsMS4xLTcuNiwzLjJjLTEuOSwyLjEtMi45LDUuMi0yLjksOS4ydjE4LjRoLTQuM1YzOS4zaDQuM3Y1LjhjMS4xLTIuMSwyLjYtMy43LDQuNi00LjgKCQkJYzItMS4xLDQuMi0xLjYsNi42LTEuNmMyLjksMCw1LjUsMC43LDcuNywyLjFjMi4yLDEuNCwzLjgsMy41LDQuOCw2LjJjMC45LTIuNywyLjUtNC43LDQuNy02LjJzNC43LTIuMSw3LjUtMi4xCgkJCUM2NTUuNywzOC43LDY1OC45LDM5LjksNjYxLjQsNDIuNCIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo="
+                                                    }
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    h(
+                                        "button.hamburger.hamburger--spin.navbar-toggler.d-block.d-lg-none.collapsed",
+                                        {
+                                            "type": "button",
+                                            "id": "ccm-toggle-mobile-nav",
+                                            "data-target": "#navbarSupportedContent",
+                                            "aria-controls": "navbarSupportedContent",
+                                            "aria-expanded": "false",
+                                            "aria-label": "Toggle navigation"
+                                        },
+                                        h(
+                                            "span.hamburger-box",
+                                            {},
+                                            h(
+                                                "span.hamburger-inner",
+                                                {}
+                                            )
+                                        )
+                                    ),
+                                    h(
+                                        "a.d-block.d-lg-none",
+                                        {
+                                            "href": getURL("/search"),
+                                            "id": "ccm-mobile-search-btn"
+                                        },
+                                        h(
+                                            "i.fas.fa-search",
+                                            {}
+                                        )
+                                    )
+                                ]
+                            ),
+                            h(
+                                "div.collapse.navbar-collapse", {
+                                    "id": "navbarSupportedContent"
+                                },
+                                h(
+                                    "div.header-navigation.ml-auto", {
+                                        "id": "ccm-desktop-nav"
+                                    },
+                                    h("ul.nav.navbar-nav.navbar-right", menuItemNodes)
+                                )
+                            )
+
+                        ]
+                    )
+                ),
+                h(
+                    "div", {
+                        "id": "ccm-sub-nav"
+                    },
+                    h(
+                        "div.container", {},
+                        h(
+                            "div.row", {},
+                            h(
+                                "div.col", {},
+                                [
+                                    h(
+                                        "h3", {},
+                                        I18n.t(themePrefix("nav.forum"))
+                                    ),
+                                    h(
+                                        "nav", {},
+                                        h("ul", subMenuItemNodes)
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                )
+            ]
+        );
+    }
+});
+</script>
+<script type="text/x-handlebars" data-template-name="components/user-card-contents">
+{{#if this.visible}}
+  <div class="card-content">
+    {{#if this.loading}}
+      <div class="card-row first-row">
+        <div class="user-card-avatar">
+          <div class="card-avatar-placeholder animated-placeholder placeholder-animation"></div>
+        </div>
+      </div>
+
+      <div class="card-row second-row">
+        <div class="animated-placeholder placeholder-animation"></div>
+      </div>
+      <div class="card-row">
+        <div class="animated-placeholder placeholder-animation"></div>
+      </div>
+      <div class="card-row">
+        <div class="animated-placeholder placeholder-animation"></div>
+      </div>
+      <div class="card-row">
+        <div class="animated-placeholder placeholder-animation"></div>
+      </div>
+    {{else}}
+      <div class="card-row first-row">
+        <div class="user-card-avatar">
+          {{#if this.user.profile_hidden}}
+            <span class="card-huge-avatar">{{bound-avatar this.user "huge"}}</span>
+          {{else}}
+            <a href={{this.user.path}} {{action "showUser" this.user}} class="card-huge-avatar">{{bound-avatar this.user "huge"}}</a>
+          {{/if}}
+          {{#if this.user.primary_group_name}}
+            {{avatar-flair
+            flairURL=this.user.primary_group_flair_url
+            flairBgColor=this.user.primary_group_flair_bg_color
+            flairColor=this.user.primary_group_flair_color
+            groupName=this.user.primary_group_name}}
+          {{/if}}
+          {{plugin-outlet name="user-card-avatar-flair" args=(hash user=this.user) tagName="div"}}
+        </div>
+        <div class="names">
+          <h1 class="{{this.staff}} {{this.newUser}} {{if this.nameFirst "full-name" "username"}}">
+            {{#if this.user.profile_hidden}}
+              <span class="name-username-wrapper">
+                {{if this.nameFirst this.user.name (format-username this.username)}}
+              </span>
+            {{else}}
+              <a href={{this.user.path}} {{action "showUser" this.user}} class="user-profile-link">
+                <span class="name-username-wrapper">
+                  {{if this.nameFirst this.user.name (format-username this.username)}}
+                </span>
+                {{user-status this.user currentUser=this.currentUser}}
+              </a>
+            {{/if}}
+          </h1>
+          {{plugin-outlet name="user-card-after-username" args=(hash user=this.user showUser=(action "showUser" this.user)) tagName=""}}
+          {{#if this.nameFirst}}
+            <h2 class="username">{{this.username}}</h2>
+          {{else}}
+            {{#if this.user.name}}
+              <h2 class="full-name">{{this.user.name}}</h2>
+            {{/if}}
+          {{/if}}
+          {{#if this.user.title}}
+            <h2>{{this.user.title}}</h2>
+          {{/if}}
+          {{#if this.user.staged}}
+            <h2 class="staged">{{i18n "user.staged"}}</h2>
+          {{/if}}
+          {{plugin-outlet name="user-card-post-names" args=(hash user=this.user) tagName="div"}}
+        </div>
+        <ul class="usercard-controls">
+          {{#if this.showFilter}}
+            <li>
+              {{d-button
+              class="btn-default"
+              action=(action "filterPosts" this.user)
+              icon="filter"
+              translatedLabel=this.filterPostsLabel}}
+            </li>
+          {{/if}}
+          {{#if this.hasUserFilters}}
+            <li>
+              {{d-button
+              action=(action "cancelFilter")
+              icon="times"
+              label="topic.filters.cancel"}}
+            </li>
+          {{/if}}
+          {{#if this.showDelete}}
+            <li>
+              {{d-button
+              class="btn-danger"
+              action=(action "deleteUser")
+              actionParam=this.user
+              icon="exclamation-triangle"
+              label="admin.user.delete"}}
+            </li>
+          {{/if}}
+          {{plugin-outlet
+            name="user-card-additional-buttons"
+            args=(hash user=this.user close=(action "close"))
+            tagName="li"}}
+        </ul>
+        {{plugin-outlet
+        name="user-card-additional-controls"
+        args=(hash user=this.user close=(action "close"))
+        tagName=""}}
+      </div>
+
+      {{#if this.user.profile_hidden}}
+        <div class="card-row second-row">
+          <div class="profile-hidden">
+            <span>{{i18n "user.profile_hidden"}}</span>
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if this.isSuspendedOrHasBio}}
+        <div class="card-row second-row">
+          {{#if this.user.suspend_reason}}
+            <div class="suspended">
+              <div class="suspension-date">
+                {{d-icon "ban"}}
+                {{#if this.user.suspendedForever}}
+                  {{i18n "user.suspended_permanently"}}
+                {{else}}
+                  {{i18n "user.suspended_notice" date=this.user.suspendedTillDate}}
+                {{/if}}
+              </div>
+              <div class="suspension-reason">
+                <span class="suspension-reason-title">{{i18n "user.suspended_reason"}}</span>
+                <span class="suspension-reason-description">{{this.user.suspend_reason}}</span>
+              </div>
+            </div>
+          {{else}}
+            {{#if this.user.bio_excerpt}}
+              <div class="bio">
+                {{#html-with-links}}
+                  {{html-safe this.user.bio_excerpt}}
+                {{/html-with-links}}
+              </div>
+            {{/if}}
+          {{/if}}
+        </div>
+      {{/if}}
+
+      {{#if this.showFeaturedTopic}}
+        <div class="card-row">
+          <div class="featured-topic">
+            <span class="desc">{{i18n "user.featured_topic"}}</span>
+            {{#link-to "topic" this.user.featured_topic.slug this.user.featured_topic.id }}{{html-safe (replace-emoji this.user.featured_topic.fancy_title)}}{{/link-to}}
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if this.hasLocaleOrWebsite}}
+        <div class="card-row">
+          <div class="location-and-website">
+            {{#if this.user.website_name}}
+              <span class="website-name">
+                {{d-icon "globe"}}
+                {{#if this.linkWebsite}}
+                  {{!-- template-lint-disable  --}}
+                  <a href="{{this.user.website}}" rel="noopener {{unless this.removeNoFollow "nofollow ugc"}}"
+                   target="_blank">{{this.user.website_name}}</a>
+                {{else}}
+                  <span title={{this.user.website}}>{{this.user.website_name}}</span>
+                {{/if}}
+              </span>
+            {{/if}}
+            {{#if this.user.location}}
+              <span class="location">
+                {{d-icon "map-marker-alt"}}
+                <span>{{this.user.location}}</span>
+              </span>
+            {{/if}}
+            {{#if showUserLocalTime}}
+              <span class="local-time" title="{{i18n "local_time"}}">
+                {{d-icon "far-clock"}}
+                <span>{{this.formattedUserLocalTime}}</span>
+              </span>
+            {{/if}}
+            {{plugin-outlet name="user-card-location-and-website" args=(hash user=this.user)}}
+          </div>
+        </div>
+      {{/if}}
+
+      <div class="card-row metadata-row">
+        {{#unless this.user.profile_hidden}}
+          <div class="metadata">
+            {{#if this.user.last_posted_at}}
+              <h3><span class="desc">{{i18n "last_post"}}</span>
+                {{format-date this.user.last_posted_at leaveAgo="true"}}</h3>
+            {{/if}}
+            <h3><span class="desc">{{i18n "joined"}}</span>
+              {{format-date this.user.created_at leaveAgo="true"}}</h3>
+            {{#if this.user.time_read}}
+              <h3 title="{{this.timeReadTooltip}}">
+                <span class="desc">{{i18n "time_read"}}</span>
+                {{format-duration this.user.time_read}}
+                {{#if this.showRecentTimeRead}}
+                  <span>({{i18n "time_read_recently" time_read=this.recentTimeRead}})</span>
+                {{/if}}
+              </h3>
+            {{/if}}
+            {{#if this.showCheckEmail}}
+              <h3 class="email">
+                {{d-icon "far-envelope" title="user.email.title"}}
+                {{#if this.user.email}}
+                  {{this.user.email}}
+                {{else}}
+                  {{d-button
+                    action=(action "checkEmail")
+                    actionParam=this.user
+                    icon="far-envelope"
+                    label="admin.users.check_email.text"
+                    class="btn-primary"}}
+                {{/if}}
+              </h3>
+            {{/if}}
+            {{plugin-outlet name="user-card-metadata" args=(hash user=this.user)}}
+          </div>
+        {{/unless}}
+        {{plugin-outlet name="user-card-after-metadata" args=(hash user=this.user) tagName=""}}
+      </div>
+
+      {{#if this.publicUserFields}}
+        <div class="card-row">
+          <div class="public-user-fields">
+            {{#each this.publicUserFields as |uf|}}
+              {{#if uf.value}}
+                <div class="public-user-field {{uf.field.dasherized_name}}">
+                  <span class="user-field-name">{{uf.field.name}}:</span>
+                  <span class="user-field-value">{{uf.value}}</span>
+                </div>
+              {{/if}}
+            {{/each}}
+          </div>
+        </div>
+      {{/if}}
+
+      {{plugin-outlet name="user-card-before-badges" args=(hash user=this.user) tagName=""}}
+
+    {{/if}}
+  </div>
+{{/if}}
+</script>
+<script type="text/x-handlebars" data-template-name="user">
+{{plugin-outlet name="above-user-profile" tagName="" args=(hash model=model)}}
+<div class="container {{if viewingSelf "viewing-self"}} {{if model.profile_hidden "profile-hidden"}}">
+  {{#d-section class="user-main"}}
+    <section class="{{if collapsedInfo "collapsed-info"}} about {{if hasProfileBackgroundUrl "has-background" "no-background"}}" >
+      {{#unless collapsedInfo}}
+        {{#if showStaffCounters}}
+          <div class="staff-counters">
+            {{#if model.number_of_flags_given}}
+              <div><span class="helpful-flags">{{model.number_of_flags_given}}</span>{{i18n "user.staff_counters.flags_given"}}</div>
+            {{/if}}
+            {{#if model.number_of_flagged_posts}}
+              <div>
+                {{#link-to "review" (query-params username=model.username status="all" type="ReviewableFlaggedPost")}}
+                  <span class="flagged-posts">{{model.number_of_flagged_posts}}</span>{{i18n "user.staff_counters.flagged_posts"}}
+                {{/link-to}}
+              </div>
+            {{/if}}
+            {{#if model.number_of_rejected_posts}}
+              <div>
+                {{#link-to "review" (query-params username=model.username status="rejected" type="ReviewableQueuedPost")}}
+                  <span class="flagged-posts">{{model.number_of_rejected_posts}}</span>{{i18n "user.staff_counters.rejected_posts"}}
+                {{/link-to}}
+              </div>
+            {{/if}}
+
+            {{#if model.number_of_deleted_posts}}
+              <div>
+                {{#link-to "user.deletedPosts" model}}
+                  <span class="deleted-posts">{{model.number_of_deleted_posts}}</span>{{i18n "user.staff_counters.deleted_posts"}}
+                {{/link-to}}
+              </div>
+            {{/if}}
+            {{#if model.number_of_suspensions}}
+              <div>
+                <a href {{action "showSuspensions"}}>
+                  <span class="suspensions">{{model.number_of_suspensions}}</span>{{i18n "user.staff_counters.suspensions"}}
+                </a>
+              </div>
+            {{/if}}
+            {{#if model.warnings_received_count}}
+              <div><span class="warnings-received">{{model.warnings_received_count}}</span>{{i18n "user.staff_counters.warnings_received"}}</div>
+            {{/if}}
+          </div>
+        {{/if}}
+        <div class="user-profile-image" style={{model.profileBackgroundUrl}}></div>
+      {{/unless}}
+      <div class="details">
+        <div class="primary">
+          {{user-profile-avatar user=model tagName=""}}
+          <section class="controls">
+            <ul>
+              {{#if canMuteOrIgnoreUser}}
+                <li>
+                  {{user-notifications-dropdown
+                      user=model
+                      value=userNotificationLevel
+                      updateNotificationLevel=(action "updateNotificationLevel")
+                  }}
+                </li>
+              {{/if}}
+              {{#if currentUser.staff}}
+                <li><a href={{model.adminPath}} class="btn btn-default">{{d-icon "wrench"}}<span class="d-button-label">{{i18n "admin.user.show_admin_profile"}}</span></a></li>
+              {{/if}}
+              {{plugin-outlet name="user-profile-controls"
+                              tagName=""
+                              connectorTagName="li"
+                              args=(hash model=model)}}
+
+              {{#if canExpandProfile}}
+                <li>
+                  {{d-button
+                    ariaExpanded=collapsedInfoState.isExpanded
+                    ariaControls="collapsed-info-panel"
+                    label=(concat "user." collapsedInfoState.label)
+                    icon=collapsedInfoState.icon
+                    action=(action collapsedInfoState.action)
+                  }}
+                </li>
+              {{/if}}
+            </ul>
+          </section>
+
+          <div class="primary-textual">
+            <div class="user-profile-names">
+              <h1 class={{if nameFirst "full-name" "username"}}>{{if nameFirst model.name (format-username model.username)}} {{user-status model currentUser=currentUser}}</h1>
+              <h2 class={{if nameFirst "username" "full-name"}}>{{#if nameFirst}}{{model.username}}{{else}}{{model.name}}{{/if}}</h2>
+              {{#if model.staged}}
+                <h2 class="staged">{{i18n "user.staged"}}</h2>
+              {{/if}}
+              {{#if model.title}}
+                <h3>{{model.title}}</h3>
+              {{/if}}
+              {{plugin-outlet name="user-post-names" args=(hash model=model)}}
+            </div>
+
+            {{#if showFeaturedTopic}}
+              <h3 class="featured-topic">
+                <span>{{i18n "user.featured_topic"}}</span>
+                {{#link-to "topic" model.featured_topic.slug model.featured_topic.id}}{{html-safe (replace-emoji model.featured_topic.fancy_title)}}{{/link-to}}
+              </h3>
+            {{/if}}
+
+            <h3 class="location-and-website">
+              {{#if model.location}}<div class="user-profile-location">{{d-icon "map-marker-alt"}} {{model.location}}</div>{{/if}}
+              {{#if model.website_name}}
+                <div class="user-profile-website">
+                  {{d-icon "globe"}}
+                  {{#if linkWebsite}}
+                    {{!-- template-lint-disable  --}}
+                    <a href={{model.website}} rel="noopener {{unless removeNoFollow 'nofollow ugc'}}" target="_blank">{{model.website_name}}</a>
+                  {{else}}
+                    <span title={{model.website}}>{{model.website_name}}</span>
+                  {{/if}}
+                </div>
+              {{/if}}
+              {{plugin-outlet name="user-location-and-website" args=(hash model=model)}}
+            </h3>
+
+            <div class='bio'>
+              {{#if model.suspended}}
+                <div class='suspended'>
+                  {{d-icon "ban"}}
+                  <b>
+                    {{#if model.suspendedForever}}
+                      {{i18n 'user.suspended_permanently'}}
+                    {{else}}
+                      {{i18n 'user.suspended_notice' date=model.suspendedTillDate}}
+                    {{/if}}
+                  </b>
+                  <br>
+                  {{#if model.suspend_reason}}
+                    <b>{{i18n 'user.suspended_reason'}}</b> {{model.suspend_reason}}
+                  {{/if}}
+                </div>
+              {{/if}}
+              {{#if isNotSuspendedOrIsStaff}}
+                {{#html-with-links}}
+                  {{html-safe model.bio_cooked}}
+                {{/html-with-links}}
+              {{/if}}
+            </div>
+
+            {{#if publicUserFields}}
+              <div class="public-user-fields">
+                {{#each publicUserFields as |uf|}}
+                  {{#if uf.value}}
+                    <div class="public-user-field {{uf.field.dasherized_name}}">
+                      <span class="user-field-name">{{uf.field.name}}</span>:
+                      <span class="user-field-value">{{uf.value}}</span>
+                    </div>
+                  {{/if}}
+                {{/each}}
+
+                {{plugin-outlet name="user-profile-public-fields"
+                                args=(hash publicUserFields=publicUserFields
+                                      model=model)}}
+              </div>
+            {{/if}}
+
+            {{plugin-outlet name="user-profile-primary" args=(hash model=model)}}
+          </div>
+        </div>
+        {{#unless collapsedInfo}}
+          <div class='secondary' id='collapsed-info-panel'>
+            <dl>
+              {{#if model.created_at}}
+                <div><dt>{{i18n 'user.created'}}</dt><dd>{{bound-date model.created_at}}</dd></div>
+              {{/if}}
+              {{#if model.last_posted_at}}
+                <div><dt>{{i18n 'user.last_posted'}}</dt><dd>{{bound-date model.last_posted_at}}</dd></div>
+              {{/if}}
+              {{#if model.last_seen_at}}
+                <div><dt>{{i18n 'user.last_seen'}}</dt><dd>{{bound-date model.last_seen_at}}</dd></div>
+              {{/if}}
+              {{#if model.profile_view_count}}
+                <div><dt>{{i18n 'views'}}</dt><dd>{{model.profile_view_count}}</dd></div>
+              {{/if}}
+              {{#if model.invited_by}}
+                <div><dt class="invited-by">{{i18n 'user.invited_by'}}</dt><dd class="invited-by">{{#link-to 'user' model.invited_by}}{{model.invited_by.username}}{{/link-to}}</dd></div>
+              {{/if}}
+              {{#if model.trust_level}}
+                <div><dt class="trust-level">{{i18n 'user.trust_level'}}</dt><dd class="trust-level">{{model.trustLevel.name}}</dd></div>
+              {{/if}}
+              {{#if canCheckEmails}}
+                <div><dt>{{i18n 'user.email.title'}}</dt>
+                <dd title={{model.email}}>
+                  {{#if model.email}}
+                    {{model.email}}
+                  {{else}}
+                    {{d-button action=(route-action "checkEmail") actionParam=model icon="far-envelope" label="admin.users.check_email.text" class="btn-primary"}}
+                  {{/if}}
+                </dd>
+                </div>
+              {{/if}}
+              {{#if model.displayGroups}}
+                <div><dt class="groups">{{i18n 'groups.title' count=model.displayGroups.length}}</dt>
+                <dd class='groups'>
+                  {{#each model.displayGroups as |group|}}
+                    <span>{{#link-to 'group' group.name class="group-link"}}{{group.name}}{{/link-to}}</span>
+                  {{/each}}
+
+                  {{#link-to "groups" (query-params username=model.username)}}
+                    ...
+                  {{/link-to}}
+                </dd>
+                </div>
+              {{/if}}
+
+              {{#if canDeleteUser}}
+                <div class='pull-right'>{{d-button action=(action "adminDelete") icon="exclamation-triangle" label="user.admin_delete" class="btn-danger"}}</div>
+              {{/if}}
+            </dl>
+            {{plugin-outlet name="user-profile-secondary" args=(hash model=model)}}
+          </div>
+        {{/unless}}
+      </div>
+    </section>
+    <div class='user-content-wrapper'>
+      <section class="user-primary-navigation">
+        {{#mobile-nav class='main-nav' desktopClass="nav nav-pills user-nav"}}
+          {{#unless model.profile_hidden}}
+            <li class="summary">{{#link-to 'user.summary'}}{{i18n 'user.summary.title'}}{{/link-to}}</li>
+            <li class="activity">{{#link-to 'userActivity'}}{{i18n 'user.activity_stream'}}{{/link-to}}</li>
+          {{/unless}}
+          {{#if showNotificationsTab}}
+            <li class="user-notifications">
+              {{#link-to 'userNotifications'}}
+                {{d-icon "comment" class="glyph"}}{{i18n 'user.notifications'}}
+              {{/link-to}}
+            </li>
+          {{/if}}
+          {{#if canInviteToForum}}
+            <li class="invited">{{#link-to 'userInvited'}}{{d-icon "user-plus"}}{{i18n 'user.invited.title'}}{{/link-to}}</li>
+          {{/if}}
+          {{plugin-outlet name="user-main-nav" tagName='' connectorTagName='li' args=(hash model=model)}}
+          {{#if model.can_edit}}
+            <li class="preferences">{{#link-to 'preferences'}}{{d-icon "cog"}}{{i18n 'user.preferences'}}{{/link-to}}</li>
+          {{/if}}
+        {{/mobile-nav}}
+      </section>
+    {{outlet}}
+  </div>
+  {{/d-section}}
+</div>
+</script>
+
+<script type="text/discourse-plugin" version="0.8">
+
+    // Replace timeline-scrollarea widget
+    api.createWidget("timeline-scrollarea", {
+        html(attrs, state) {
+        }
+    });
+
+    api.modifyClass('controller:user-card-contents', {
+        user: {
+            can_send_private_message_to_user: false
+        }
+    });
+
+    api.modifyClass('controller:user-card', {
+        actions: {
+            showUser(user) {
+                window.location.href = "https://community.concretecms.com/index.php/members/profile/lookup_email?email=" + encodeURIComponent(user.email);
+                return false;
+            },
+            showGroup(group) {
+                console.log(user);
+            },
+        }
+    });
 </script>
