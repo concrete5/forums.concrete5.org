@@ -1324,6 +1324,7 @@ header nav.navbar-right {
   }
 }
 
+#create-topic,
 .btn-primary {
   @include btn(
           $text-color: $white,
@@ -2855,4 +2856,39 @@ body .post-stream * {
 
 .highlighted {
   animation: none !important;
+}
+
+.posts-filtered-notice {
+  background: $light-gray !important;
+  margin-bottom: 15px;
+}
+
+.search-container,
+.regular.ember-view,
+.container.list-container {
+  padding-bottom: 15px;
+  background: #ffffff !important;
+  margin-bottom: -15px;
+}
+
+.admin-content {
+  padding: 15px;
+}
+
+.search-container {
+  padding-top: 15px;
+}
+
+.list-controls {
+  background: transparent !important;
+}
+
+.wrap>.contents, #main-outlet>div, #main-outlet>section {
+  background: transparent;
+}
+
+.topic-list tr,
+.category-topics-count,
+.category-list-item.category tr:first-of-type {
+  border: none !important;
 }
