@@ -2,8 +2,11 @@ en:
   nav:
     home: "Home"
     about: "About"
-    forum: "Forum"
+    forum: "Forums"
     extensions: "Extensions"
+    categories: "Categories"
+    latest: "Latest"
+    top: "Top"
     support: "Support"
     admin: "Admin"
     search: "Search"

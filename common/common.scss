@@ -317,6 +317,32 @@ header {
   height: 120px;
 }
 
+.spinner {
+  display: none !important;
+}
+
+
+.categories-and-latest {
+  .category-name, .latest-topic-list-item .title, .topic-statuses svg {
+    color: $accent !important;
+  }
+
+  .category-description, .latest-topic-list-item .category-name {
+    color: $text !important;
+  }
+}
+
+.topic-list {
+  .link-top-line .title {
+    color: $accent !important;
+  }
+
+  .category-name {
+    color: $text !important;
+  }
+
+}
+
 header nav.navbar-light {
   font-size: 1rem;
   font-weight: 400;
@@ -2871,6 +2897,10 @@ body .post-stream * {
   margin-bottom: -15px;
 }
 
+.home-link {
+  color: #fff !important;
+  font-family: "Poppins" !important;
+}
 .admin-content {
   padding: 15px;
 }
