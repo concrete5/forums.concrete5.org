@@ -171,17 +171,17 @@
     })
   }
 
-  var old = $.fn.dropdown
+  var old = jQuery.fn.dropdown
 
-  $.fn.dropdown             = Plugin
-  $.fn.dropdown.Constructor = Dropdown
+  jQuery.fn.dropdown             = Plugin
+  jQuery.fn.dropdown.Constructor = Dropdown
 
 
   // DROPDOWN NO CONFLICT
   // ====================
 
-  $.fn.dropdown.noConflict = function () {
-    $.fn.dropdown = old
+  jQuery.fn.dropdown.noConflict = function () {
+    jQuery.fn.dropdown = old
     return this
   }
 
@@ -261,7 +261,7 @@
         }
 
         function setTransitionEndSupport() {
-            $.fn.emulateTransitionEnd = transitionEndEmulator;
+            jQuery.fn.emulateTransitionEnd = transitionEndEmulator;
             $.event.special[Util.TRANSITION_END] = getSpecialTransitionEndEvent();
         }
         /**
@@ -446,7 +446,7 @@
         var DATA_KEY = 'bs.collapse';
         var EVENT_KEY = "." + DATA_KEY;
         var DATA_API_KEY = '.data-api';
-        var JQUERY_NO_CONFLICT = $.fn[NAME];
+        var JQUERY_NO_CONFLICT = jQuery.fn[NAME];
         var Default = {
             toggle: true,
             parent: ''
@@ -787,11 +787,11 @@
          * ------------------------------------------------------------------------
          */
 
-        $.fn[NAME] = Collapse._jQueryInterface;
-        $.fn[NAME].Constructor = Collapse;
+        jQuery.fn[NAME] = Collapse._jQueryInterface;
+        jQuery.fn[NAME].Constructor = Collapse;
 
-        $.fn[NAME].noConflict = function () {
-            $.fn[NAME] = JQUERY_NO_CONFLICT;
+        jQuery.fn[NAME].noConflict = function () {
+            jQuery.fn[NAME] = JQUERY_NO_CONFLICT;
             return Collapse._jQueryInterface;
         };
 
