@@ -372,9 +372,9 @@
   //** Default `.form-control` height
   $input-height-base: 0 !default;
   //** Large `.form-control` height
-  $input-height-large: (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
+  $input-height-large: 0 !default;
   //** Small `.form-control` height
-  $input-height-small: (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
+  $input-height-small: 0 !default;
 
   // Navbar vertical align
   //
