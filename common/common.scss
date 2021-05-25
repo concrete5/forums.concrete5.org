@@ -543,6 +543,10 @@ header nav.navbar-right {
         &::before {
           background-color: $white;
         }
+
+        i {
+          color: #222533 !important;
+        }
       }
 
       div[aria-labelledby='ccm-account-dropdown'] {

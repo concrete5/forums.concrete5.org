@@ -12,3 +12,6 @@ en:
     search: "Search"
     profile: "Profile"
     login: "Login"
+    edit_profile: "Edit Profile"
+    messages: "Private Messages"
+    public_profile: "View Public Profile"

@@ -923,20 +923,20 @@ api.createWidget("header", {
             ],
 
             accountNav: [{
-                    label: I18n.t("user.bookmarks"),
-                    url: getURL(`${accountPath}/activity/bookmarks`),
+                    label: I18n.t(themePrefix("nav.edit_profile")),
+                    url: 'https://community.concretecms.com/account/edit_profile',
                     isVisible: true,
                     isActive: false
                 },
                 {
-                    label: I18n.t("user.preferences"),
-                    url: getURL(`${accountPath}/preferences/account`),
+                    label: I18n.t(themePrefix("nav.messages")),
+                    url: 'https://community.concretecms.com/account/messages',
                     isVisible: true,
                     isActive: false
                 },
                 {
-                    label: I18n.t("user.notifications"),
-                    url: getURL(`${accountPath}/preferences/notifications`),
+                    label: I18n.t(themePrefix("nav.public_profile")),
+                    url: 'https://community.concretecms.com/members/profile',
                     isVisible: true,
                     isActive: false
                 }
@@ -1766,6 +1766,7 @@ api.createWidget("header", {
 
     api.modifyClass('controller:user-card', {
         actions: {
+            avatar_template: 'ff',
             showUser(user) {
                 window.location.href = "https://community.concretecms.com/index.php/members/profile/lookup_email?email=" + encodeURIComponent(user.email);
                 return false;
@@ -1775,4 +1776,8 @@ api.createWidget("header", {
             },
         }
     });
+</script>
+
+
+<script type="text/discourse-plugin" version="0.8">
 </script>
