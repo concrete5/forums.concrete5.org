@@ -919,6 +919,11 @@ api.createWidget("header", {
                     url: getURL("/top"),
                     isVisible: true,
                     isActive: false
+                },{
+                    label: I18n.t(themePrefix("nav.preferences")),
+                    url: getURL(`${accountPath}/preferences/account`),
+                    isVisible: true,
+                    isActive: false
                 }
             ],
 
