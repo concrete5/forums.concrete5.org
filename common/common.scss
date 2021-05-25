@@ -543,6 +543,10 @@ header nav.navbar-right {
         &::before {
           background-color: $white;
         }
+
+        i {
+          color: #222533 !important;
+        }
       }
 
       div[aria-labelledby='ccm-account-dropdown'] {
@@ -2921,4 +2925,33 @@ body .post-stream * {
 .category-topics-count,
 .category-list-item.category tr:first-of-type {
   border: none !important;
+}
+
+
+.user-content,
+.about .details {
+  padding-left: 20px !important;
+  padding-top: 20px !important;
+  padding-right: 20px !important;
+  margin-left: 0 !important;
+  line-height: 32px !important;
+}
+
+.user-content {
+  width: 100% !important;
+}
+
+.about .controls .btn {
+  border-radius: 5px !important;
+  border-color: #dfdfdf !important;
+}
+
+.user-content-wrapper .nav-pills a {
+  padding-left: 36px !important;
+  padding-right: 36px !important;
+}
+
+#main-outlet .user-main .about h1 {
+  font-size: 2em !important;
+  font-weight: normal !important;
 }
