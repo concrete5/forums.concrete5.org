@@ -1768,19 +1768,6 @@ api.createWidget("header", {
             can_send_private_message_to_user: false
         }
     });
-
-    api.modifyClass('controller:user-card', {
-        actions: {
-            avatar_template: 'ff',
-            showUser(user) {
-                window.location.href = "https://community.concretecms.com/index.php/members/profile/lookup_email?email=" + encodeURIComponent(user.email);
-                return false;
-            },
-            showGroup(group) {
-                console.log(user);
-            },
-        }
-    });
 </script>
 
 <script type="text/x-handlebars" data-template-name="components/latest-topic-list-item">
