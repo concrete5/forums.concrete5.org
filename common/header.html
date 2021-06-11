@@ -873,28 +873,34 @@ api.createWidget("header", {
         var topLevelMenuItems = {
             mainNav: [
                 {
-                    label: I18n.t(themePrefix("nav.support")),
-                    url: "https://community.concretecms.com/",
-                    isVisible: true,
-                    isActive: false
-                },
-                {
                     label: I18n.t(themePrefix("nav.about")),
-                    url: "https://community.concretecms.com/",
+                    url: "https://marketing.concretecms.com/about",
                     isVisible: true,
                     isActive: false
                 },
                 {
-                    label: I18n.t(themePrefix("nav.forum")),
-                    url: getURL("/"),
+                    label: I18n.t(themePrefix("nav.getstarted")),
+                    url: "https://marketing.concretecms.com/get-started",
                     isVisible: true,
-                    isActive: true
+                    isActive: false
                 },
                 {
                     label: I18n.t(themePrefix("nav.extensions")),
-                    url: "https://community.concretecms.com/",
+                    url: "https://marketing.concretecms.com/extensions",
                     isVisible: true,
                     isActive: false
+                },
+                {
+                    label: I18n.t(themePrefix("nav.support")),
+                    url: "https://marketing.concretecms.com/support",
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    label: I18n.t(themePrefix("nav.community")),
+                    url: "https://marketing.concretecms.com/community",
+                    isVisible: true,
+                    isActive: true
                 }
             ],
 

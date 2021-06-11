@@ -314,7 +314,7 @@ header {
   position: relative;
   background-color: #222533;
   box-sizing: border-box;
-  height: 120px;
+  height: 100px;
 }
 
 .spinner {
@@ -357,7 +357,7 @@ header nav.navbar-light {
   flex-flow: row nowrap;
   justify-content: flex-start;
   padding: 0;
-  height: 80px;
+  height: 60px;
 }
 
 #navbarSupportedContent {
@@ -394,7 +394,7 @@ header nav.navbar-right {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   margin-left: auto !important;
-  height: 80px;
+  height: 60px;
 
   li.nav-item {
     -webkit-text-size-adjust: 100%;
@@ -409,6 +409,9 @@ header nav.navbar-right {
     margin-top: 25px;
 
     a.nav-link {
+
+      padding-left: 0;
+      padding-right: 0;
       display: block;
       direction: ltr;
       -webkit-font-smoothing: antialiased;
@@ -845,7 +848,7 @@ header nav.navbar-right {
   display: flex;
   width: 100%;
   margin-bottom: 15px;
-  height: 80px;
+  height: 60px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.05);
   position: relative;
 
@@ -881,7 +884,7 @@ header nav.navbar-right {
     box-shadow: 0 8px 4px -4px rgba(0, 0, 0, 0.05);
     height: 40px;
     position: absolute;
-    top: 80px;
+    top: 60px;
     left: 0;
     width: 100%;
     z-index: 100;
@@ -925,7 +928,7 @@ header nav.navbar-right {
   @include media-breakpoint-up(lg) {
 
     &.has-sub-nav {
-      height: 120px;
+      height: 100px;
     }
 
     .caret, .dropdown-toggle::after {
@@ -945,7 +948,7 @@ header nav.navbar-right {
 
     .navbar {
       padding: 0;
-      height: 80px;
+      height: 60px;
 
       #ccm-desktop-nav > .nav > .nav-item {
         margin-top: 25px;
@@ -1003,9 +1006,9 @@ header nav.navbar-right {
 
         & > a {
           font-family: "Poppins";
-          text-transform: uppercase;
-          font-weight: 600;
-          font-size: 14px;
+          text-transform: none;
+          font-weight: 400;
+          font-size: 16px;
           line-height: 30px;
           margin-top: 0px;
           margin-bottom: 25px;
@@ -1026,7 +1029,7 @@ header nav.navbar-right {
               content: " ";
               position: absolute;
               height: 4px;
-              bottom: -17px;
+              bottom: -7px;
               width: 100%;
               left: 0;
             }
@@ -1816,7 +1819,7 @@ a.cancel {
  * Generic Styles
  */
 .d-header {
-  height: 80px;
+  height: 60px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, .05);
 
   #site-logo {
@@ -2575,7 +2578,7 @@ body {
 }
 
 header.has-sub-nav > .container {
-  height: 80px;
+  height: 60px;
 }
 
 @media (max-width: 768px) {
