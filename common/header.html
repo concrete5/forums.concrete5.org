@@ -934,20 +934,33 @@ api.createWidget("header", {
             ],
 
             accountNav: [{
-                    label: I18n.t(themePrefix("nav.edit_profile")),
-                    url: 'https://community.concretecms.com/account/edit_profile',
+                    type: "item",
+                    label: I18n.t(themePrefix("nav.my_profile")),
+                    url: 'https://community.concretecms.com/members/profile',
                     isVisible: true,
                     isActive: false
                 },
                 {
+                    type: "item",
                     label: I18n.t(themePrefix("nav.messages")),
                     url: 'https://community.concretecms.com/account/messages',
                     isVisible: true,
                     isActive: false
                 },
                 {
-                    label: I18n.t(themePrefix("nav.public_profile")),
-                    url: 'https://community.concretecms.com/members/profile',
+                    type: "separator"
+                },
+                {
+                    type: "item",
+                    label: I18n.t(themePrefix("nav.purchase_history")),
+                    url: 'https://marketplace.concretecms.com/profile/bank',
+                    isVisible: true,
+                    isActive: false
+                },
+                {
+                    type: "item",
+                    label: I18n.t(themePrefix("nav.projects")),
+                    url: 'https://marketplace.concretecms.com/profile/projects',
                     isVisible: true,
                     isActive: false
                 }
@@ -999,35 +1012,39 @@ api.createWidget("header", {
             var accountMenuDropdownNodes = [];
 
             for (var accountMenuItem of topLevelMenuItems.accountNav) {
-                accountMenuItemNodes.push(
-                    h(
-                        "a.dropdown-item" + (accountMenuItem.isActive ? ".active" : ""), {
-                            "href": accountMenuItem.url,
-                            "target": "_self"
-                        },
-                        accountMenuItem.label
-                    )
-                );
-
-                accountMenuDropdownNodes.push(
-                    h(
-                        "li.nav-item",
-                        {},
+                if (accountMenuItem.type === "separator") {
+                    accountMenuItemNodes.push(h("div.dropdown-divider"));
+                } else {
+                    accountMenuItemNodes.push(
                         h(
-                            "a.nav-link" + (accountMenuItem.isActive ? ".active" : ""), {
+                            "a.dropdown-item" + (accountMenuItem.isActive ? ".active" : ""), {
                                 "href": accountMenuItem.url,
                                 "target": "_self"
                             },
                             accountMenuItem.label
                         )
-                    )
-                );
+                    );
+
+                    accountMenuDropdownNodes.push(
+                        h(
+                            "li.nav-item",
+                            {},
+                            h(
+                                "a.nav-link" + (accountMenuItem.isActive ? ".active" : ""), {
+                                    "href": accountMenuItem.url,
+                                    "target": "_self"
+                                },
+                                accountMenuItem.label
+                            )
+                        )
+                    );
+                }
             }
 
             accountMenuItemNodes.push(h("div.dropdown-divider"));
             accountMenuItemNodes.push(this.attach("flat-button", {
                 action: "logout",
-                content: I18n.t("user.log_out"),
+                content: I18n.t(themePrefix("nav.sign_out")),
                 icon: "sign-out-alt",
                 label: "user.log_out",
             }));
@@ -1038,7 +1055,7 @@ api.createWidget("header", {
                     {},
                     this.attach("flat-button", {
                         action: "logout",
-                        content: I18n.t("user.log_out"),
+                        content: I18n.t(themePrefix("nav.sign_out")),
                         icon: "sign-out-alt",
                         label: "user.log_out",
                     })
