@@ -1162,7 +1162,6 @@ header nav.navbar-right {
   }
 }
 
-
 /*
  * Popup menu
  */
@@ -1294,6 +1293,15 @@ header nav.navbar-right {
 
 .btn.hidden {
   display: none;
+}
+
+.composer-fields .select-kit.combo-box.mini-tag-chooser .select-kit-header {
+  height: 43px;
+}
+
+.composer-controls button, .submit-panel .btn-mini-toggle {
+  border: none !important;
+  background: transparent !important;
 }
 
 .popup-menu .btn {
