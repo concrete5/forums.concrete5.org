@@ -1300,8 +1300,10 @@ header nav.navbar-right {
 }
 
 .composer-controls button, .submit-panel .btn-mini-toggle {
-  border: none !important;
-  background: transparent !important;
+  line-height: 19px !important;
+  border-radius: 80px;
+  height: 38px;
+  margin-left: 15px;
 }
 
 .popup-menu .btn {
