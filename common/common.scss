@@ -2814,6 +2814,11 @@ body .post-stream * {
   text-transform: none !important;
 }
 
+#main-outlet code,
+#main-outlet pre {
+  font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+}
+
 .footer-message * {
   font-weight: normal;
   font-family: "Noto Sans" !important;
