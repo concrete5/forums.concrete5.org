@@ -1075,8 +1075,8 @@ api.createWidget("header", {
                                 "title:": I18n.t(themePrefix("nav.profile"))
                             },
                             h(
-                                "img.user-circle-avatar", {
-                                  "src": currentUser.avatar_template
+                                "img.avatar.single", {
+                                  "src": currentUser.avatar_template.replace('{size}', '25')
                                 }
                             )
                         ),
