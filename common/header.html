@@ -1060,6 +1060,7 @@ api.createWidget("header", {
                 )
             );
 
+            console.log("CURRENT USER", currentUser)
             menuItemNodes.push(
                 h(
                     "li.d-none.d-lg-block.nav-item", {},
@@ -1074,7 +1075,9 @@ api.createWidget("header", {
                                 "title:": I18n.t(themePrefix("nav.profile"))
                             },
                             h(
-                                "i.fas.fa-user"
+                                "i.fas.fa-user", {
+                                  "data-user": JSON.stringify(currentUser)
+                                }
                             )
                         ),
                         h(
