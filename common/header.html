@@ -1074,7 +1074,9 @@ api.createWidget("header", {
                                 "title:": I18n.t(themePrefix("nav.profile"))
                             },
                             h(
-                                "i.fas.fa-user"
+                                "img.avatar.single", {
+                                  "src": currentUser.avatar_template.replace('{size}', '25')
+                                }
                             )
                         ),
                         h(
