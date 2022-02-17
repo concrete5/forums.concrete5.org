@@ -1852,3 +1852,52 @@ api.createWidget("header", {
   </div>
 {{/if}}
 </script>
+
+<script class="disclosure" role="cookie-disclosure-template" type='text/template'>
+  <div class='disclosure-container ccm-ui'>
+      <div class='disclosure'>
+          <div>
+              <p>
+                  This website stores cookies on your computer. These cookies are used to improve
+                  your website experience and provide more personalized services to you, both on this website and through
+                  other media. To find out more about the cookies we use, see our <a href='https://www.concretecms.com/about/legal/privacy-policy' target='_blank'>Privacy Policy</a>.
+              </p>
+          </div>     
+          <button class='ack btn btn-primary '>Accept</button>
+      </div>
+  </div>
+</script>
+
+<script type="text/javascript" role="cookie-disclosure">
+  (function() {
+    const hasCookie = () => /ccm_cdd=1/.test(document.cookie)
+    const setCookie = cookie => document.cookie = cookie
+    window.addEventListener('load', () => {
+        // Early return if the disclosure has already been acknowledged
+        if (hasCookie()) {
+            return
+        }
+
+        // Render and append elements to the dom
+        const templateElement = $('script.disclosure[role="cookie-disclosure-template"]')
+
+        const template = templateElement.length > 0 ? templateElement.text().trim() : ''
+        const disclosure = $($.parseHTML(template))
+
+        if (disclosure.length) {
+            disclosure.appendTo(document.body).addClass('open')
+
+            // Handle ack press
+            $('button.ack').on('click', async () => {
+                disclosure.addClass('close').removeClass('open')
+                // Note this 500 matches the timing in `_disclosure.scss` for the `fadeout` animation
+                setTimeout(() => disclosure.remove(), 500)
+
+                // Set a 100 year cookie
+                const sld = window.location.host.split('.').slice(-2).join('.')
+                setCookie('ccm_cdd=1;samesite=lax;domain=.' + sld + ';max-age=' + (31536000 * 100))
+            })
+        }
+    })
+  })()
+</script>
