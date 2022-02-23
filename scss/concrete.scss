@@ -39,7 +39,6 @@
 
   .disclosure {
       @include do-animation('slide-top');
-      pointer-events: none;
       display: -webkit-box;
       display: -ms-flexbox;
       display: -webkit-flex;
