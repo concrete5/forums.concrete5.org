@@ -25,8 +25,8 @@
 }
 
 @mixin do-animation($animation, $duration: 1s) {
-  animation: slide-top 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  -webkit-animation: slide-top 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: $animation $duration cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: $animation $duration cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .disclosure-container {
