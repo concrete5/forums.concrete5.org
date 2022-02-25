@@ -1453,6 +1453,12 @@ api.createWidget("header", {
                 {{/if}}
               </span>
             {{/if}}
+
+            <span class="website-name">
+              <a href="/api/v1/discourse/profile/{{this.user.username}}" rel="noopener"
+            target="_blank">{{this.user.username}}</a>
+            </span>
+
             {{#if this.user.location}}
               <span class="location">
                 {{d-icon "map-marker-alt"}}
