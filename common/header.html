@@ -1437,44 +1437,41 @@ api.createWidget("header", {
           </div>
         </div>
       {{/if}}
-
-      {{#if this.hasLocaleOrWebsite}}
-        <div class="card-row">
-          <div class="location-and-website">
-            {{#if this.user.website_name}}
-              <span class="website-name">
-                {{d-icon "globe"}}
-                {{#if this.linkWebsite}}
-                  {{!-- template-lint-disable  --}}
-                  <a href="{{this.user.website}}" rel="noopener {{unless this.removeNoFollow "nofollow ugc"}}"
-                   target="_blank">{{this.user.website_name}}</a>
-                {{else}}
-                  <span title={{this.user.website}}>{{this.user.website_name}}</span>
-                {{/if}}
-              </span>
-            {{/if}}
-
+      <div class="card-row">
+        <div class="location-and-website">
+          {{#if this.user.website_name}}
             <span class="website-name">
-              <a href="/api/v1/discourse/profile/{{this.user.username}}" rel="noopener"
-            target="_blank">{{this.user.username}}</a>
+              {{d-icon "globe"}}
+              {{#if this.linkWebsite}}
+                {{!-- template-lint-disable  --}}
+                <a href="{{this.user.website}}" rel="noopener {{unless this.removeNoFollow "nofollow ugc"}}"
+                  target="_blank">{{this.user.website_name}}</a>
+              {{else}}
+                <span title={{this.user.website}}>{{this.user.website_name}}</span>
+              {{/if}}
             </span>
+          {{/if}}
 
-            {{#if this.user.location}}
-              <span class="location">
-                {{d-icon "map-marker-alt"}}
-                <span>{{this.user.location}}</span>
-              </span>
-            {{/if}}
-            {{#if showUserLocalTime}}
-              <span class="local-time" title="{{i18n "local_time"}}">
-                {{d-icon "far-clock"}}
-                <span>{{this.formattedUserLocalTime}}</span>
-              </span>
-            {{/if}}
-            {{plugin-outlet name="user-card-location-and-website" args=(hash user=this.user)}}
-          </div>
+          <span class="website-name">
+            <a href="/api/v1/discourse/profile/{{this.user.username}}" rel="noopener"
+          target="_blank">{{this.user.username}}</a>
+          </span>
+
+          {{#if this.user.location}}
+            <span class="location">
+              {{d-icon "map-marker-alt"}}
+              <span>{{this.user.location}}</span>
+            </span>
+          {{/if}}
+          {{#if showUserLocalTime}}
+            <span class="local-time" title="{{i18n "local_time"}}">
+              {{d-icon "far-clock"}}
+              <span>{{this.formattedUserLocalTime}}</span>
+            </span>
+          {{/if}}
+          {{plugin-outlet name="user-card-location-and-website" args=(hash user=this.user)}}
         </div>
-      {{/if}}
+      </div>
 
       <div class="card-row metadata-row">
         {{#unless this.user.profile_hidden}}
