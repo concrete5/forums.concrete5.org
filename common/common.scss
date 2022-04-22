@@ -2973,3 +2973,16 @@ body .post-stream * {
   font-size: 2em !important;
   font-weight: normal !important;
 }
+
+d-header-wrap {
+  z-index: 1103 !important;
+}
+
+.topic-excerpt {
+  width: 100% !important;
+  margin-bottom: 15px !important;
+}
+
+.topic-body .topic-meta-data {
+  width: calc(100% - 30px) !important;
+}
