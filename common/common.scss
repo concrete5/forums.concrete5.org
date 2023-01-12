@@ -2491,6 +2491,10 @@ body {
   }
 
   .footer-nav-utility {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
     margin-bottom: 1rem;
     a.nav-link {
       color: $black;
