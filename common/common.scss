@@ -2490,11 +2490,60 @@ body {
     margin-bottom: 1rem;
   }
 
+  .footer-nav-utility {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1rem;
+    a.nav-link {
+      color: $black;
+      @include media-breakpoint-up(lg) {
+        align-items: center;
+        padding: 0;
+        display: flex;
+        &::after {
+          font-size: 12px;
+          content: "|";
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        &:last-child {
+          &::after {
+            content: "";
+          }
+        }
+      }
+      &:hover {
+        color: $accent;
+        &::after {
+          color: #000;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .footer-nav-utility {
+      display: block;
+      a.nav-link {
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+
   background-color: $white;
   padding-top: 40px;
   padding-bottom: 26px;
   margin-top: 15px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.05);
+
+  .footer-nav-utility {
+    a.nav-link {
+      color: $white;
+    }
+  }
 
   h4.page-title {
     text-transform: none;
